@@ -12,9 +12,11 @@ Check out my [Sudoku solver](https://github.com/rg1990/cv-sudoku-solver) project
 
 - [Codeword Puzzle Description](#codeword-puzzle-description)
 - [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
 - [Algorithm and Data Structures](#algorithm-and-data-structures)
+- [Heuristics](#heuristics)
+- [Installation](#installation)
+- [Current Limitations](#current-limitations)
+- [Future Developments](#future-developments)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
