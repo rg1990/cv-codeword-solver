@@ -211,15 +211,6 @@ class CodewordSolverDFS():
                 word_list, else False.
         '''
         return all([self._word_trie.search(search_string) for search_string in word_list])
-
-
-    # This method has become redundant
-    # def letter_dict_is_valid(self, decoded_words):
-    #     #decoded_words = self.decode_words_in_list(encoded_words)
-    #     if self.all_words_are_valid(decoded_words):
-    #         return True
-    #     else:
-    #         return False
         
         
     def print_decoded_letters(self):
@@ -233,59 +224,3 @@ class CodewordSolverDFS():
             end_str = "\n" if (i+1) % 13 == 0 else " "
             print(f"{letter.upper()}", end=end_str)
             
-
-
-#%%
-# Load the list of words and construct the trie
-with open("data/words_alpha.txt") as word_file:
-    word_list = set(word_file.read().split())
-    word_trie = WordDictionary()
-    for word in word_list:
-        word_trie.add_word(word)
-
-
-#%%
-# Get an example puzzle (choose from 12, 13, 15 or 19)
-example_code_dict, all_encoded_words, solution = get_puzzle(12)
-# Create a CodewordSolver instance
-solver = CodewordSolverDFS(all_encoded_words, example_code_dict.copy(), word_trie, use_heuristics=True)
-# Solve the codeword
-start_time = time.perf_counter()
-solver.solve()
-end_time = time.perf_counter()
-print(f"Solving took {end_time - start_time:.3f} seconds.\n")
-
-# Check if the solver failed and notify the user
-decoded_words = solver.decode_words_in_list(all_encoded_words)
-if np.any(["." in word for word in decoded_words]):
-    print("Solving failed! Check puzzle details are correct.")
-
-# Catch the case where the words don't have wildcards, but are nonsense words
-if not np.all([word_trie.search(word) for word in decoded_words]):
-    raise RuntimeError(f"One or more decoded words are not valid:\n{decoded_words}")
-    
-
-print(decoded_words)
-solver.print_decoded_letters()
-
-
-# Updating the puzzle without creating a new CodewordSolverDFS instance
-new_code_dict, new_encoded_words, new_solution = get_puzzle(15)
-solver.update_puzzle(new_encoded_words, new_code_dict, use_heuristics=True)
-# Solve the new puzzle
-start_time = time.perf_counter()
-solver.solve()
-end_time = time.perf_counter()
-print(f"\nSolving the second puzzle took {end_time - start_time:.3f} seconds.\n")
-
-# Check if the solver failed and notify the user
-decoded_words = solver.decode_words_in_list(new_encoded_words)
-if np.any(["." in word for word in decoded_words]):
-    print("Solving failed! Check puzzle details are correct")
-
-# Catch the case where the words don't have wildcards, but are nonsense words
-if not np.all([word_trie.search(word) for word in decoded_words]):
-    raise RuntimeError("One or more decoded words are not valid:\n{decoded_words}")
-
-print(decoded_words)
-solver.print_decoded_letters()
